@@ -8,62 +8,19 @@
     "@testing-library/user-event": "^12.1.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-icons": "^4.3.1",
+    "react-scripts": "^5.0.0",
+    "styled-components": "^5.3.3",
+    "web-vitals": "^2.1.2",
+    "eslint-plugin-prettier": "4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "comma-dangle": [
-        "error",
-        {
-          "arrays": "always-multiline",
-          "exports": "always-multiline",
-          "functions": "never",
-          "imports": "always-multiline",
-          "objects": "always-multiline"
-        }
-      ],
-      "max-len": [
-        "error",
-        {
-          "code": 100
-        }
-      ],
-      "eqeqeq": [
-        "error",
-        "always",
-        {
-          "null": "ignore"
-        }
-      ],
-      "no-await-in-loop": [
-        "error"
-      ],
-      "no-param-reassign": "error",
-      "react/self-closing-comp": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-      "lines-between-class-members": [
-        "error",
-        "always",
-        {
-          "exceptAfterSingleLine": true
-        }
-      ],
-      "no-sparse-arrays": 0,
-      "curly": "error"
-    }
+    "prepare": "husky install",
+    "lint:fix": "eslint ./src --ext .js,.jsx --fix"
   },
   "browserslist": {
     "production": [
@@ -78,13 +35,13 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react": "^7.28.0",
+    "eslint": "7.29.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-react": "7.28.0",
+    "husky": "^7.0.0",
     "prettier": "2.5.1",
     "stylelint": "^14.3.0",
-    "stylelint-config-standard": "^24.0.0",
-    "husky": "^7.0.0"
+    "stylelint-config-standard": "^24.0.0"
   },
   "lint-staged": {
     "*.{js, jsx, css, json}": [
