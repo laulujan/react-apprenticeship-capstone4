@@ -1,10 +1,12 @@
+import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-.swiper {
+export const MySwiper = styled(Swiper)`
   width: 100%;
   height: 100%;
-}
+`;
 
-.swiper-slide {
+export const MySlide = styled(SwiperSlide)`
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -22,11 +24,15 @@
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-}
+  & img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
 
-.swiper-slide img {
-  display: block;
+export const Img = styled.img`
+  height: 200px;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+`;

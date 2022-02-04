@@ -1,9 +1,10 @@
 import React from 'react';
-import { MdOutlineShoppingCart } from 'react-icons/md';
+
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import {
   Nav,
   NavIcon,
-  CartButton,
+  Title,
   Input,
   InputWrapper,
   Icon,
@@ -16,15 +17,14 @@ const Header = () => {
         <NavIcon to="#">
           <img src="/logo.png" alt="logo" />
         </NavIcon>
+        <Title>My Shop</Title>
         <InputWrapper>
           <label htmlFor="search-input">
             <Icon />
             <Input type="text" placeholder="Search" />
           </label>
         </InputWrapper>
-        <CartButton>
-          <MdOutlineShoppingCart />
-        </CartButton>
+        <ShoppingCart />
       </Nav>
     </header>
   );
