@@ -1,38 +1,26 @@
 import styled from 'styled-components';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-export const MySwiper = styled(Swiper)`
+export const Container = styled.div`
+  position: relative;
   width: 100%;
-  height: 100%;
+  line-height: 30px;
 `;
-
-export const MySlide = styled(SwiperSlide)`
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-
-  /* Center slide text vertically */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-  & img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
 export const Img = styled.img`
-  height: 200px;
   width: 100%;
+  margin: 2rem 0 2rem 0;
+`;
+
+export const TextContent = styled.div`
+  & h2 {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    font-weight: 700;
+    color: white;
+    padding: 1rem 0 0 1rem;
+    background: #000;
+    opacity: 0.7;
+  }
 `;

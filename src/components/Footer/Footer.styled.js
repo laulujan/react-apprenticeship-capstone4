@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const FooterComponent = styled.footer`
-  position: fixed;
+  position: sticky;
+  background-color: white;
   bottom: 0;
   left: 0;
   width: 100%;

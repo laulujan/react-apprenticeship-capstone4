@@ -7,14 +7,14 @@ import {
   CardContent,
 } from './ProductCard.styled';
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
   return (
     <>
       <MyCard>
-        <CardImage src="https://images.prismic.io/wizeline-academy/fa394f7d-4d89-4c90-86b3-832de74928fa_1.webp?auto=compress,format" />
+        <CardImage src={product.data.mainimage.url} />
         <CardContent>
-          <CardTitle>some title</CardTitle>
-          <CardDescription>price</CardDescription>
+          <CardTitle>{product.data.name}</CardTitle>
+          <CardDescription>Price: ${product.data.price}</CardDescription>
         </CardContent>
       </MyCard>
     </>

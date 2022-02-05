@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import CategoryCard from '../CategoryCard/CategoryCard';
+import { fetchdata } from '../../api/fetchData';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/grid';
@@ -11,6 +12,13 @@ import 'swiper/css/pagination';
 import { Pagination, Navigation } from 'swiper';
 
 const CategorySlider = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchdata(
+      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/product-categories.json'
+    ).then((data) => setCategories(data.results));
+  }, []);
   return (
     <>
       <Swiper
@@ -20,20 +28,20 @@ const CategorySlider = () => {
           clickable: true,
         }}
         breakpoints={{
-          '@0.00': {
-            slidesPerView: 1,
-            spaceBetween: 10,
-          },
-          '@0.75': {
+          640: {
             slidesPerView: 2,
             spaceBetween: 20,
           },
-          '@1.00': {
+          768: {
             slidesPerView: 3,
             spaceBetween: 40,
           },
-          '@1.50': {
+          1050: {
             slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          1554: {
+            slidesPerView: 5,
             spaceBetween: 50,
           },
         }}
@@ -41,41 +49,12 @@ const CategorySlider = () => {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <CategoryCard
-            url={
-              'https://images.prismic.io/wizeline-academy/5df875b5-3e43-4cf0-97b9-06ed73ed6d9b_sanibell-bv-530lZQXMKGw-unsplash-web+%281%29.jpg?auto=compress,format&rect=0,24,1920,1231&w=621&h=398'
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <CategoryCard
-            url={
-              'https://images.prismic.io/wizeline-academy/5df875b5-3e43-4cf0-97b9-06ed73ed6d9b_sanibell-bv-530lZQXMKGw-unsplash-web+%281%29.jpg?auto=compress,format&rect=0,24,1920,1231&w=621&h=398'
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <CategoryCard
-            url={
-              'https://images.prismic.io/wizeline-academy/5df875b5-3e43-4cf0-97b9-06ed73ed6d9b_sanibell-bv-530lZQXMKGw-unsplash-web+%281%29.jpg?auto=compress,format&rect=0,24,1920,1231&w=621&h=398'
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <CategoryCard
-            url={
-              'https://images.prismic.io/wizeline-academy/5df875b5-3e43-4cf0-97b9-06ed73ed6d9b_sanibell-bv-530lZQXMKGw-unsplash-web+%281%29.jpg?auto=compress,format&rect=0,24,1920,1231&w=621&h=398'
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <CategoryCard
-            url={
-              'https://images.prismic.io/wizeline-academy/5df875b5-3e43-4cf0-97b9-06ed73ed6d9b_sanibell-bv-530lZQXMKGw-unsplash-web+%281%29.jpg?auto=compress,format&rect=0,24,1920,1231&w=621&h=398'
-            }
-          />
-        </SwiperSlide>
+        {categories &&
+          categories.map((category) => (
+            <SwiperSlide key={category.id}>
+              <CategoryCard category={category.data} />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </>
   );

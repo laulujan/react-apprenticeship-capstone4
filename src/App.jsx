@@ -1,9 +1,7 @@
 import React from 'react';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Slider from './components/Slider/Slider';
-import CategorySlider from './components/CategorySlider/CategorySlider';
-import CardContainer from './components/CardContainer/CardContainer';
+import Home from './pages/Home/Home';
 //import { useFeaturedBanners } from './utils/hooks/useFeaturedBanners';
 
 function App() {
@@ -13,9 +11,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Slider />
-      <CategorySlider />
-      <CardContainer />
+      <Home />
       <Footer />
     </div>
   );

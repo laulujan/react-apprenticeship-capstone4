@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 
 export const MyCard = styled.div`
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  border-radius: 2px;
-  width: 20rem;
-  border-radius: 5px;
-  padding: 1rem;
-  margin: 1rem;
+  width: 18rem;
   cursor: pointer;
-  &:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  & img {
+    opacity: 0.9;
+  }
+  &:hover h4 {
+    color: #39bda9;
+  }
+  &:hover img {
+    opacity: 1;
   }
   @media (max-width: 920px) {
-    width: 15rem;
+    width: 13rem;
   }
   @media (max-width: 820px) {
     width: 100%;
@@ -21,6 +22,7 @@ export const MyCard = styled.div`
 
 export const CardContent = styled.div`
   padding: 2px 16px;
+  text-align: center;
 `;
 
 export const CardImage = styled.img`
@@ -29,6 +31,9 @@ export const CardImage = styled.img`
 
 export const CardTitle = styled.h4`
   color: black;
+  padding: 0;
+  word-wrap: break-word;
+  font-size: 1.5rem;
 `;
 
 export const CardDescription = styled.p`

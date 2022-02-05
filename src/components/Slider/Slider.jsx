@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Img } from './Slider.styled';
+import { Img, TextContent, Container } from './Slider.styled';
+import { fetchdata } from '../../api/fetchData';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -10,6 +11,13 @@ import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper';
 
 const Slider = () => {
+  const [banners, setBanners] = useState([]);
+
+  useEffect(() => {
+    fetchdata(
+      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/featured-banners.json'
+    ).then((data) => setBanners(data.results));
+  }, []);
   return (
     <>
       <Swiper
@@ -26,12 +34,20 @@ const Slider = () => {
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <Img src="https://images.prismic.io/wizeline-academy/edaf28da-2e46-4f75-8a69-a972119f40ed_banner-3-2.jpeg?auto=compress,format&rect=0,0,1429,700&w=1440&h=705" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Img src="https://images.prismic.io/wizeline-academy/305e2781-5f25-4c00-bef7-1041b49def37_banner-1-2.jpeg?auto=compress,format&rect=103,0,1226,600&w=1440&h=705" />
-        </SwiperSlide>
+        {banners &&
+          banners.map((banner) => (
+            <SwiperSlide key={banner.id}>
+              <Container>
+                <Img
+                  src={banner.data.main_image.url}
+                  alt={banner.data.main_image.alt}
+                />
+                <TextContent>
+                  <h2>{banner.data.description[0].text}</h2>
+                </TextContent>
+              </Container>
+            </SwiperSlide>
+          ))}
       </Swiper>
     </>
   );

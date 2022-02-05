@@ -6,12 +6,12 @@ import {
   CardContent,
 } from './CategoryCard.styled';
 
-const CategoryCard = ({ url }) => {
+const CategoryCard = ({ category }) => {
   return (
     <MyCard>
-      <CardImage src={url} />
+      <CardImage src={category.main_image.url} alt={category.main_image.alt} />
       <CardContent>
-        <CardTitle>some title</CardTitle>
+        <CardTitle>{category.name}</CardTitle>
       </CardContent>
     </MyCard>
   );
