@@ -48,6 +48,7 @@ const CategorySlider = () => {
         navigation={true}
         modules={[Pagination, Navigation]}
         className="mySwiper"
+        style={{ zIndex: 0 }}
       >
         {categories &&
           categories.map((category) => (

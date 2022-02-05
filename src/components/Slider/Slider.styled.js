@@ -8,6 +8,7 @@ export const Container = styled.div`
 export const Img = styled.img`
   width: 100%;
   margin: 2rem 0 2rem 0;
+  max-height: 700px;
 `;
 
 export const TextContent = styled.div`
@@ -22,5 +23,9 @@ export const TextContent = styled.div`
     padding: 1rem 0 0 1rem;
     background: #000;
     opacity: 0.7;
+    @media (max-width: 640px) {
+      font-size: 14px;
+      height: 2rem;
+    }
   }
 `;

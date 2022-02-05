@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const MyCard = styled.div`
   width: 18rem;
   cursor: pointer;
+  max-height: 300px;
   & img {
     opacity: 0.9;
   }
@@ -27,6 +28,7 @@ export const CardContent = styled.div`
 
 export const CardImage = styled.img`
   width: 100%;
+  max-height: 180px;
 `;
 
 export const CardTitle = styled.h4`
