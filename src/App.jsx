@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
+import ProductList from './pages/ProductList/ProductList';
 //import { useFeaturedBanners } from './utils/hooks/useFeaturedBanners';
 
 function App() {
   //const { data, isLoading } = useFeaturedBanners();
   //console.log(data, isLoading);
+  const [homePage, setHomePage] = useState(true);
+
+  const handleClick = () => {
+    setHomePage(!homePage);
+  };
+
+  const handleReturn = () => {
+    setHomePage(true);
+  };
 
   return (
     <div className="App">
-      <Header />
-      <Home />
+      <Header onClick={handleReturn} />
+      {homePage ? <Home onClick={handleClick} /> : <ProductList />}
       <Footer />
     </div>
   );
