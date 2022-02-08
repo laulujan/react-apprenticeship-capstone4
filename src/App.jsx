@@ -3,11 +3,8 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 import ProductList from './pages/ProductList/ProductList';
-//import { useFeaturedBanners } from './utils/hooks/useFeaturedBanners';
 
 function App() {
-  //const { data, isLoading } = useFeaturedBanners();
-  //console.log(data, isLoading);
   const [homePage, setHomePage] = useState(true);
 
   const handleClick = () => {

@@ -32,6 +32,7 @@ const Slider = () => {
         }}
         modules={[Autoplay, Pagination]}
         className="mySwiper"
+        style={{ zIndex: 0 }}
       >
         {banners &&
           banners.map((banner) => (

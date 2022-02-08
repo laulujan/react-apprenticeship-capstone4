@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Slider from '../../components/Slider/Slider';
 import CategorySlider from '../../components/CategorySlider/CategorySlider';
 import CardContainer from '../../components/CardContainer/CardContainer';
-import { Container, Title } from './Home.styled';
+import { Container, Title, Button } from './Home.styled';
 import { fetchdata } from '../../api/fetchData';
 
 const Home = ({ onClick }) => {
@@ -20,7 +20,7 @@ const Home = ({ onClick }) => {
       <CategorySlider />
       <Title>Featured Products</Title>
       <CardContainer products={products} />
-      <button onClick={onClick}>View all products</button>
+      <Button onClick={onClick}>View all products</Button>
     </Container>
   );
 };
