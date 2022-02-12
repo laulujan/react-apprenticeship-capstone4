@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';
 
 export const Nav = styled.nav`
@@ -11,7 +12,7 @@ export const Nav = styled.nav`
   position: relative;
 `;
 
-export const NavIcon = styled.div`
+export const NavIcon = styled(Link)`
   font-size: 1rem;
   margin-left: 1rem;
   height: 80px;

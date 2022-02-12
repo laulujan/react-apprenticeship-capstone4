@@ -10,11 +10,11 @@ import {
   Icon,
 } from './Header.styled';
 
-const Header = ({ onClick }) => {
+const Header = () => {
   return (
     <header>
       <Nav>
-        <NavIcon onClick={onClick}>
+        <NavIcon to="/home">
           <img src="/logo.png" alt="logo" />
         </NavIcon>
         <Title>My Shop</Title>

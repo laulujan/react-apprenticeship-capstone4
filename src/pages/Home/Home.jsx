@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Slider from '../../components/Slider/Slider';
 import CategorySlider from '../../components/CategorySlider/CategorySlider';
 import CardContainer from '../../components/CardContainer/CardContainer';
-import { Container, Title, Button } from './Home.styled';
+import { Container, Title, Button, LinkTo } from './Home.styled';
 import { fetchdata } from '../../api/fetchData';
 
-const Home = ({ onClick }) => {
+const Home = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -20,7 +20,9 @@ const Home = ({ onClick }) => {
       <CategorySlider />
       <Title>Featured Products</Title>
       <CardContainer products={products} />
-      <Button onClick={onClick}>View all products</Button>
+      <Button>
+        <LinkTo to="products">View all products</LinkTo>
+      </Button>
     </Container>
   );
 };
