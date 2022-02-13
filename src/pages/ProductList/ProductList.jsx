@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { fetchdata } from '../../api/fetchData';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import CardContainer from '../../components/CardContainer/CardContainer';
 import { Container } from './ProductList.styled';
 import Pagination from '../../components/Pagination/Pagination';
 import Loader from '../../components/Loader/Loader';
+import { useProducts } from '../../provider/Provider';
+import { useLatestAPI } from '../../utils/hooks/useLatestAPI';
 
 const ProductList = () => {
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [activeFilters, setActiveFilters] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const { fetchProducts, products, categories, loading } = useProducts();
+  const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
 
   useEffect(() => {
-    fetchdata(
-      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/product-categories.json'
-    ).then((data) => setCategories(data.results));
-  }, []);
-  useEffect(() => {
-    fetchdata(
-      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/products.json'
-    ).then((data) => setProducts(data.results));
-  }, []);
+    if (!apiRef || isApiMetadataLoading) {
+      return () => {};
+    }
+    fetchProducts(apiRef, page);
+  }, [isApiMetadataLoading, loading, page]);
 
   const filter = () => {
     const activeFiltersSet = new Set(activeFilters);
@@ -37,11 +34,6 @@ const ProductList = () => {
     const result = filter();
     setFilteredProducts(result);
   }, [activeFilters]);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
-  }, [loading]);
-
   return (
     <Container>
       <Sidebar categories={categories} setActiveFilters={setActiveFilters} />
@@ -58,7 +50,7 @@ const ProductList = () => {
               }
               activeFilters={activeFilters}
             />
-            <Pagination />
+            <Pagination page={page} setPage={setPage} />
           </>
         )}
       </div>

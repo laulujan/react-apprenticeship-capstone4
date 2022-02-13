@@ -1,6 +1,10 @@
 import React, { useContext, useReducer } from 'react';
 import { ProductsContext } from './Context';
-import { fetchCategories, fetchFeaturedProducts } from './Actions';
+import {
+  fetchCategories,
+  fetchFeaturedProducts,
+  fetchProducts,
+} from './Actions';
 import { productsReducer, initialState } from './Reducer';
 
 function useProducts() {
@@ -17,8 +21,10 @@ const ProductsProvider = ({ children }) => {
     products: state.products,
     categories: state.categories,
     error: state.error,
+    totalPages: state.totalPages,
     fetchCategories: fetchCategories(dispatch),
     fetchFeaturedProducts: fetchFeaturedProducts(dispatch),
+    fetchProducts: fetchProducts(dispatch),
   };
   return (
     <ProductsContext.Provider value={value}>

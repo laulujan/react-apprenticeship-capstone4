@@ -21,7 +21,9 @@ const fetchCategories = (dispatch) => async (apiRef) => {
 
     dispatch({
       type: ACTIONS.FETCH_CATEGORIES_SUCCESS,
-      payload: { categories: categories.results },
+      payload: {
+        categories: categories.results,
+      },
     });
     return categories;
   } catch (error) {
@@ -45,7 +47,9 @@ const fetchFeaturedProducts = (dispatch) => async (apiRef) => {
 
     dispatch({
       type: ACTIONS.FETCH_PRODUCTS_SUCCESS,
-      payload: { products: products.results },
+      payload: {
+        products: products.results,
+      },
     });
     return products;
   } catch (error) {
@@ -57,4 +61,28 @@ const fetchFeaturedProducts = (dispatch) => async (apiRef) => {
   }
 };
 
-export { ACTIONS, fetchCategories, fetchFeaturedProducts };
+const fetchProducts = (dispatch) => async (apiRef, page) => {
+  dispatch({ type: ACTIONS.FETCH_PRODUCTS });
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
+        '[[at(document.type, "product")]]'
+      )}&lang=en-us&pageSize=12&page=${page}`
+    );
+    const products = await response.json();
+
+    dispatch({
+      type: ACTIONS.FETCH_PRODUCTS_SUCCESS,
+      payload: { products: products.results, totalPages: products.total_pages },
+    });
+    return products;
+  } catch (error) {
+    dispatch({
+      type: ACTIONS.FETCH_PRODUCTS_ERROR,
+      payload: { error: error.error },
+    });
+    return error;
+  }
+};
+
+export { ACTIONS, fetchCategories, fetchFeaturedProducts, fetchProducts };

@@ -25,7 +25,7 @@ const Home = () => {
       <Title>Featured Products</Title>
       <CardContainer products={products} />
       <Button>
-        <LinkTo to="products">View all products</LinkTo>
+        <LinkTo to="/products">View all products</LinkTo>
       </Button>
     </Container>
   );

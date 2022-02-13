@@ -5,6 +5,7 @@ export const initialState = {
   error: false,
   products: [],
   categories: [],
+  totalPages: null,
 };
 
 export function productsReducer(state, action) {
@@ -21,6 +22,7 @@ export function productsReducer(state, action) {
         ...state,
         loading: false,
         products: payload.products,
+        totalPages: payload.totalPages,
       };
     case ACTIONS.FETCH_PRODUCTS_ERROR:
       return {
