@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react';
-// Import Swiper React components
+import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import CategoryCard from '../CategoryCard/CategoryCard';
-import { fetchdata } from '../../api/fetchData';
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
-
-// import required modules
 import { Pagination, Navigation } from 'swiper';
+import { useProducts } from '../../provider/Provider';
+import { useLatestAPI } from '../../utils/hooks/useLatestAPI';
 
 const CategorySlider = () => {
-  const [categories, setCategories] = useState([]);
+  const { fetchCategories, categories } = useProducts();
+  const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
 
   useEffect(() => {
-    fetchdata(
-      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/product-categories.json'
-    ).then((data) => setCategories(data.results));
-  }, []);
+    if (!apiRef || isApiMetadataLoading) {
+      return () => {};
+    }
+    fetchCategories(apiRef);
+  }, [isApiMetadataLoading]);
   return (
     <>
       <Swiper

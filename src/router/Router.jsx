@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Home from '../pages/Home/Home';
@@ -10,8 +10,9 @@ function Router() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route exact path="/" element={<Navigate to="/home" />} />
-        <Route exact path="/home" element={<Home />} />
+        {['/', '/home'].map((path) => (
+          <Route path={path} element={<Home />} key={path.index} />
+        ))}
         <Route exact path="/products" element={<ProductList />} />
       </Routes>
       <Footer />
