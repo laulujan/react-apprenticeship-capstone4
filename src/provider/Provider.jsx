@@ -4,6 +4,9 @@ import {
   fetchCategories,
   fetchFeaturedProducts,
   fetchProducts,
+  fetchProductsByCategory,
+  setFilters,
+  updatePage,
 } from './Actions';
 import { productsReducer, initialState } from './Reducer';
 
@@ -22,9 +25,14 @@ const ProductsProvider = ({ children }) => {
     categories: state.categories,
     error: state.error,
     totalPages: state.totalPages,
+    currentPage: state.currentPage,
+    filters: state.filters,
+    updatePage: updatePage(dispatch),
+    setFilters: setFilters(dispatch),
     fetchCategories: fetchCategories(dispatch),
     fetchFeaturedProducts: fetchFeaturedProducts(dispatch),
     fetchProducts: fetchProducts(dispatch),
+    fetchProductsByCategory: fetchProductsByCategory(dispatch),
   };
   return (
     <ProductsContext.Provider value={value}>

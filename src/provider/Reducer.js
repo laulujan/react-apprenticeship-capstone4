@@ -6,6 +6,8 @@ export const initialState = {
   products: [],
   categories: [],
   totalPages: null,
+  currentPage: 1,
+  filters: '',
 };
 
 export function productsReducer(state, action) {
@@ -47,6 +49,17 @@ export function productsReducer(state, action) {
         ...state,
         loading: false,
         error: payload.error,
+      };
+    case ACTIONS.SET_FILTERS:
+      return {
+        ...state,
+        filters: payload.filters,
+        currentPage: payload.currentPage,
+      };
+    case ACTIONS.UPDATE_PAGE:
+      return {
+        ...state,
+        currentPage: payload.currentPage,
       };
     default:
       throw new Error(`Invalid action "${type}"`);

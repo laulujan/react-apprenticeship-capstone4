@@ -6,12 +6,15 @@ import {
   CardContent,
 } from './CategoryCard.styled';
 
-const CategoryCard = ({ category }) => {
+const CategoryCard = ({ category, handleClick }) => {
   return (
-    <MyCard>
-      <CardImage src={category.main_image.url} alt={category.main_image.alt} />
+    <MyCard onClick={() => handleClick(category.id, category.data.name)}>
+      <CardImage
+        src={category.data.main_image.url}
+        alt={category.data.main_image.alt}
+      />
       <CardContent>
-        <CardTitle>{category.name}</CardTitle>
+        <CardTitle>{category.data.name}</CardTitle>
       </CardContent>
     </MyCard>
   );

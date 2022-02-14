@@ -8,17 +8,17 @@ import {
 } from './Pagination.styled';
 import { useProducts } from '../../provider/Provider';
 
-const Pagination = ({ page, setPage }) => {
-  const { totalPages } = useProducts();
+const Pagination = ({ page }) => {
+  const { totalPages, updatePage } = useProducts();
   const onIncrement = () => {
     if (page < totalPages) {
-      setPage(++page);
+      updatePage(++page);
     }
   };
 
   const onDecrement = () => {
-    if (page >= 2) {
-      setPage(--page);
+    if (page > 1) {
+      updatePage(--page);
     }
   };
   return (

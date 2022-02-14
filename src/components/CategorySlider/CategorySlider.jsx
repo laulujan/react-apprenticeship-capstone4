@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useNavigate } from 'react-router-dom';
 import CategoryCard from '../CategoryCard/CategoryCard';
 import 'swiper/css';
 import 'swiper/css/grid';
@@ -9,8 +10,9 @@ import { useProducts } from '../../provider/Provider';
 import { useLatestAPI } from '../../utils/hooks/useLatestAPI';
 
 const CategorySlider = () => {
-  const { fetchCategories, categories } = useProducts();
+  const { fetchCategories, categories, updatePage } = useProducts();
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!apiRef || isApiMetadataLoading) {
@@ -18,6 +20,14 @@ const CategorySlider = () => {
     }
     fetchCategories(apiRef);
   }, [isApiMetadataLoading]);
+
+  const handleClick = (id, categorySlug) => {
+    updatePage(1);
+    navigate({
+      pathname: '/products',
+      search: `?category=${categorySlug}`,
+    });
+  };
   return (
     <>
       <Swiper
@@ -52,7 +62,7 @@ const CategorySlider = () => {
         {categories &&
           categories.map((category) => (
             <SwiperSlide key={category.id}>
-              <CategoryCard category={category.data} />
+              <CategoryCard category={category} handleClick={handleClick} />
             </SwiperSlide>
           ))}
       </Swiper>

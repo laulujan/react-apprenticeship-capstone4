@@ -1,12 +1,21 @@
 import React from 'react';
 import { Container, Fieldset, Legend, Input } from './Sidebar.styled';
+import { useNavigate } from 'react-router-dom';
+import { useProducts } from '../../provider/Provider';
 
-const Sidebar = ({ categories, setActiveFilters }) => {
+const Sidebar = ({ categories }) => {
+  const navigate = useNavigate();
+  const { setFilters } = useProducts();
+
   let selected = [];
   const onChange = () => {
     const checked = document.querySelectorAll('input[type="checkbox"]:checked');
-    selected = Array.from(checked).map((x) => x.value);
-    setActiveFilters(selected);
+    selected = Array.from(checked).map((x) => x.name);
+    setFilters(selected.join(','));
+    navigate({
+      pathname: '/products',
+      search: `?category=${selected.join(',')}`,
+    });
   };
 
   return (
@@ -18,7 +27,7 @@ const Sidebar = ({ categories, setActiveFilters }) => {
             <div key={category.id}>
               <Input
                 type="checkbox"
-                name={category}
+                name={category.data.name}
                 id={category.data.name}
                 value={category.id}
               />
