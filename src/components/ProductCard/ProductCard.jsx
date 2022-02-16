@@ -5,6 +5,8 @@ import {
   CardImage,
   CardDescription,
   CardContent,
+  Button,
+  Box,
 } from './ProductCard.styled';
 
 const ProductCard = ({ product }) => {
@@ -16,6 +18,9 @@ const ProductCard = ({ product }) => {
           <CardTitle>{product.data.name}</CardTitle>
           <CardDescription>Price: ${product.data.price}</CardDescription>
         </CardContent>
+        <Box>
+          <Button>Add to Cart</Button>
+        </Box>
       </MyCard>
     </>
   );

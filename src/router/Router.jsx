@@ -4,6 +4,7 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Home from '../pages/Home/Home';
 import ProductList from '../pages/ProductList/ProductList';
+import ProductDetail from '../pages/ProductDetail/ProductDetail';
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
           <Route path={path} element={<Home />} key={path.index} />
         ))}
         <Route exact path="/products" element={<ProductList />} />
+        <Route exact path="/product" element={<ProductDetail />} />
       </Routes>
       <Footer />
     </BrowserRouter>

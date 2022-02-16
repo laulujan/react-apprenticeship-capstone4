@@ -20,6 +20,10 @@ export const Button = styled.div`
   min-height: 44px;
   width: 100%;
   text-align: center;
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  line-height: 2.5em;
   &:hover,
   &:focus {
     opacity: 0.75;
