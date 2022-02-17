@@ -15,7 +15,7 @@ function Router() {
           <Route path={path} element={<Home />} key={path.index} />
         ))}
         <Route exact path="/products" element={<ProductList />} />
-        <Route exact path="/product" element={<ProductDetail />} />
+        <Route exact path="/product/:id" element={<ProductDetail />} />
       </Routes>
       <Footer />
     </BrowserRouter>

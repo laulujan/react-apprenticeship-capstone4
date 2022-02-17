@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   MyCard,
   CardTitle,
@@ -10,9 +11,16 @@ import {
 } from './ProductCard.styled';
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+
+  const handleClic = (id) => {
+    navigate({
+      pathname: `/product/${id}`,
+    });
+  };
   return (
     <>
-      <MyCard>
+      <MyCard onClick={() => handleClic(product.id)}>
         <CardImage src={product.data.mainimage.url} />
         <CardContent>
           <CardTitle>{product.data.name}</CardTitle>

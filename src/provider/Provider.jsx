@@ -3,6 +3,7 @@ import { ProductsContext } from './Context';
 import {
   fetchCategories,
   fetchFeaturedProducts,
+  fetchProductById,
   fetchProducts,
   fetchProductsByCategory,
   setFilters,
@@ -33,6 +34,7 @@ const ProductsProvider = ({ children }) => {
     fetchFeaturedProducts: fetchFeaturedProducts(dispatch),
     fetchProducts: fetchProducts(dispatch),
     fetchProductsByCategory: fetchProductsByCategory(dispatch),
+    fetchProductById: fetchProductById(dispatch),
   };
   return (
     <ProductsContext.Provider value={value}>

@@ -9,6 +9,9 @@ const ACTIONS = {
   FETCH_CATEGORIES_ERROR: 'FETCH_CATEGORIES_ERROR',
   SET_FILTERS: 'SET_FILTERS',
   UPDATE_PAGE: 'UPDATE_PAGE',
+  FETCH_PRODUCT: 'FETCH_PRODUCT',
+  FETCH_PRODUCT_SUCCESS: 'FETCH_PRODUCT_SUCCESS',
+  FETCH_PRODUCT_ERROR: 'FETCH_PRODUCT_ERROR',
 };
 
 const setFilters = (dispatch) => (filters) => {
@@ -139,6 +142,32 @@ const fetchProductsByCategory =
     }
   };
 
+const fetchProductById = (dispatch) => async (apiRef, id) => {
+  dispatch({ type: ACTIONS.FETCH_PRODUCTS });
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
+        `[[at(document.id,"${id}")]]`
+      )}`
+    );
+    const product = await response.json();
+
+    dispatch({
+      type: ACTIONS.FETCH_PRODUCT_SUCCESS,
+      payload: {
+        product: product.results,
+      },
+    });
+    return product;
+  } catch (error) {
+    dispatch({
+      type: ACTIONS.FETCH_PRODUCT_ERROR,
+      payload: { error: error.error },
+    });
+    return error;
+  }
+};
+
 export {
   ACTIONS,
   fetchCategories,
@@ -147,4 +176,5 @@ export {
   fetchProductsByCategory,
   setFilters,
   updatePage,
+  fetchProductById,
 };

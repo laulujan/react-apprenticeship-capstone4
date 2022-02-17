@@ -8,6 +8,7 @@ export const initialState = {
   totalPages: null,
   currentPage: 1,
   filters: '',
+  product: {},
 };
 
 export function productsReducer(state, action) {
@@ -27,6 +28,24 @@ export function productsReducer(state, action) {
         totalPages: payload.totalPages,
       };
     case ACTIONS.FETCH_PRODUCTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload.error,
+      };
+    case ACTIONS.FETCH_PRODUCT:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    case ACTIONS.FETCH_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        product: payload.product,
+      };
+    case ACTIONS.FETCH_PRODUCT_ERROR:
       return {
         ...state,
         loading: false,
