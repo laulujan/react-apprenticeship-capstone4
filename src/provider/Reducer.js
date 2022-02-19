@@ -3,12 +3,15 @@ import { ACTIONS } from './Actions';
 export const initialState = {
   loading: false,
   error: false,
+  featuredProducts: [],
   products: [],
   categories: [],
   totalPages: null,
   currentPage: 1,
   filters: '',
   product: {},
+  apiMetadata: { ref: null, isLoading: true },
+  results: [],
 };
 
 export function productsReducer(state, action) {
@@ -28,6 +31,24 @@ export function productsReducer(state, action) {
         totalPages: payload.totalPages,
       };
     case ACTIONS.FETCH_PRODUCTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload.error,
+      };
+    case ACTIONS.FETCH_FEATURED_PRODUCTS:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    case ACTIONS.FETCH_FEATURED_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        featuredProducts: payload.featuredProducts,
+      };
+    case ACTIONS.FETCH_FEATURED_PRODUCTS_ERROR:
       return {
         ...state,
         loading: false,
@@ -64,6 +85,42 @@ export function productsReducer(state, action) {
         categories: payload.categories,
       };
     case ACTIONS.FETCH_CATEGORIES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload.error,
+      };
+    case ACTIONS.GET_API_METADATA:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    case ACTIONS.GET_API_METADATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        apiMetadata: payload.apiMetadata,
+      };
+    case ACTIONS.GET_API_METADATA_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload.error,
+      };
+    case ACTIONS.SEARCH_PRODUCTS:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    case ACTIONS.SEARCH_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        results: payload.results,
+      };
+    case ACTIONS.SEARCH_PRODUCTS_ERROR:
       return {
         ...state,
         loading: false,

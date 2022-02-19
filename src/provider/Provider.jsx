@@ -8,6 +8,8 @@ import {
   fetchProductsByCategory,
   setFilters,
   updatePage,
+  getApiMetadata,
+  searchProducts,
 } from './Actions';
 import { productsReducer, initialState } from './Reducer';
 
@@ -23,11 +25,16 @@ const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(productsReducer, initialState);
   const value = {
     products: state.products,
+    featuredProducts: state.featuredProducts,
     categories: state.categories,
     error: state.error,
     totalPages: state.totalPages,
     currentPage: state.currentPage,
     filters: state.filters,
+    product: state.product,
+    loading: state.loading,
+    apiMetadata: state.apiMetadata,
+    results: state.results,
     updatePage: updatePage(dispatch),
     setFilters: setFilters(dispatch),
     fetchCategories: fetchCategories(dispatch),
@@ -35,6 +42,8 @@ const ProductsProvider = ({ children }) => {
     fetchProducts: fetchProducts(dispatch),
     fetchProductsByCategory: fetchProductsByCategory(dispatch),
     fetchProductById: fetchProductById(dispatch),
+    getApiMetadata: getApiMetadata(dispatch),
+    searchProducts: searchProducts(dispatch),
   };
   return (
     <ProductsContext.Provider value={value}>

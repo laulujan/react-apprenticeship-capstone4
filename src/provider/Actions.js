@@ -1,6 +1,9 @@
 import { API_BASE_URL } from '../utils/constants';
 
 const ACTIONS = {
+  FETCH_FEATURED_PRODUCTS: 'FETCH_FEATURED_PRODUCTS',
+  FETCH_FEATURED_PRODUCTS_SUCCESS: 'FETCH_FEATURED_PRODUCTS_SUCCESS',
+  FETCH_FEATURED_PRODUCTS_ERROR: 'FETCH_FEATURED_PRODUCTS_ERROR',
   FETCH_PRODUCTS: 'FETCH_PRODUCTS',
   FETCH_PRODUCTS_SUCCESS: 'FETCH_PRODUCTS_SUCCESS',
   FETCH_PRODUCTS_ERROR: 'FETCH_PRODUCTS_ERROR',
@@ -12,6 +15,36 @@ const ACTIONS = {
   FETCH_PRODUCT: 'FETCH_PRODUCT',
   FETCH_PRODUCT_SUCCESS: 'FETCH_PRODUCT_SUCCESS',
   FETCH_PRODUCT_ERROR: 'FETCH_PRODUCT_ERROR',
+  GET_API_METADATA: 'GET_API_METADATA',
+  GET_API_METADATA_SUCCESS: 'GET_API_METADATA_SUCCESS',
+  GET_API_METADATA_ERROR: 'GET_API_METADATA_ERROR',
+  SEARCH_PRODUCTS: 'SEARCH_PRODUCTS',
+  SEARCH_PRODUCTS_SUCCESS: 'SEARCH_PRODUCTS_SUCCESS',
+  SEARCH_PRODUCTS_ERROR: 'SEARCH_PRODUCTS_ERROR',
+};
+
+const getApiMetadata = (dispatch) => async () => {
+  const controller = new AbortController();
+  dispatch({ type: ACTIONS.GET_API_METADATA });
+  try {
+    const response = await fetch(API_BASE_URL, {
+      signal: controller.signal,
+    });
+    const { refs: [{ ref } = {}] = [] } = await response.json();
+    dispatch({
+      type: ACTIONS.GET_API_METADATA_SUCCESS,
+      payload: { apiMetadata: { ref, isLoading: false } },
+    });
+    return ref;
+  } catch (error) {
+    dispatch({
+      type: ACTIONS.GET_API_METADATA_ERROR,
+      payload: { error: error.error },
+    });
+  }
+  return () => {
+    controller.abort();
+  };
 };
 
 const setFilters = (dispatch) => (filters) => {
@@ -60,7 +93,7 @@ const fetchCategories = (dispatch) => async (apiRef) => {
 };
 
 const fetchFeaturedProducts = (dispatch) => async (apiRef) => {
-  dispatch({ type: ACTIONS.FETCH_PRODUCTS });
+  dispatch({ type: ACTIONS.FETCH_FEATURED_PRODUCTS });
   try {
     const response = await fetch(
       `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
@@ -70,15 +103,15 @@ const fetchFeaturedProducts = (dispatch) => async (apiRef) => {
     const products = await response.json();
 
     dispatch({
-      type: ACTIONS.FETCH_PRODUCTS_SUCCESS,
+      type: ACTIONS.FETCH_FEATURED_PRODUCTS_SUCCESS,
       payload: {
-        products: products.results,
+        featuredProducts: products.results,
       },
     });
     return products;
   } catch (error) {
     dispatch({
-      type: ACTIONS.FETCH_PRODUCTS_ERROR,
+      type: ACTIONS.FETCH_FEATURED_PRODUCTS_ERROR,
       payload: { error: error.error },
     });
     return error;
@@ -155,13 +188,40 @@ const fetchProductById = (dispatch) => async (apiRef, id) => {
     dispatch({
       type: ACTIONS.FETCH_PRODUCT_SUCCESS,
       payload: {
-        product: product.results,
+        product: product.results[0],
       },
     });
     return product;
   } catch (error) {
     dispatch({
       type: ACTIONS.FETCH_PRODUCT_ERROR,
+      payload: { error: error.error },
+    });
+    return error;
+  }
+};
+
+const searchProducts = (dispatch) => async (apiRef, term) => {
+  dispatch({ type: ACTIONS.SEARCH_PRODUCTS });
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
+        `[[at(document.type, "product")][fulltext(document, "${term}")]]`
+      )}`
+    );
+    const products = await response.json();
+
+    dispatch({
+      type: ACTIONS.SEARCH_PRODUCTS_SUCCESS,
+      payload: {
+        results: products.results,
+        totalPages: products.total_pages,
+      },
+    });
+    return products;
+  } catch (error) {
+    dispatch({
+      type: ACTIONS.SEARCH_PRODUCTS_ERROR,
       payload: { error: error.error },
     });
     return error;
@@ -177,4 +237,6 @@ export {
   setFilters,
   updatePage,
   fetchProductById,
+  getApiMetadata,
+  searchProducts,
 };

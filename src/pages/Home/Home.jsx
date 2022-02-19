@@ -5,17 +5,24 @@ import CategorySlider from '../../components/CategorySlider/CategorySlider';
 import CardContainer from '../../components/CardContainer/CardContainer';
 import { Container, Title, Button } from './Home.styled';
 import { useProducts } from '../../provider/Provider';
-import { useLatestAPI } from '../../utils/hooks/useLatestAPI';
 
 const Home = () => {
-  const { fetchFeaturedProducts, products, setFilters } = useProducts();
-  const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
+  const {
+    fetchFeaturedProducts,
+    featuredProducts,
+    setFilters,
+    apiMetadata,
+    getApiMetadata,
+  } = useProducts();
+  const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
   const navigate = useNavigate();
 
   useEffect(() => {
+    getApiMetadata();
     if (!apiRef || isApiMetadataLoading) {
       return () => {};
     }
+
     fetchFeaturedProducts(apiRef);
   }, [isApiMetadataLoading]);
 
@@ -31,7 +38,7 @@ const Home = () => {
       <Title>Categories</Title>
       <CategorySlider />
       <Title>Featured Products</Title>
-      <CardContainer products={products} />
+      <CardContainer products={featuredProducts} />
       <Button onClick={handleClick}>View all products</Button>
     </Container>
   );

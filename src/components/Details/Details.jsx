@@ -8,25 +8,28 @@ import {
   ButtonAdd,
   Box,
 } from './Details.styled';
+import { useProducts } from '../../provider/Provider';
 
 const Details = () => {
+  const { product } = useProducts();
+
   return (
     <div>
-      <Title>PRODUCT TITLE</Title>
+      <Title>{product.data.name}</Title>
       <Label>
-        <b>Price</b> $1234
+        <b>Price</b> ${product.data.price}
       </Label>
       <Label>
-        <b>SKU:</b> #IAUEIRJKDSFJALS
+        <b>SKU:</b> {product.data.sku}
       </Label>
       <Label>
-        <b>Category:</b> Decoration
+        <b>Category:</b> {product.data.category.slug}
       </Label>
       <Label>
         <b>Tags:</b>
-        <Tag>Lighting</Tag>
-        <Tag>Modern</Tag>
-        <Tag>Cool</Tag>
+        {product.tags.map((tag) => (
+          <Tag key={tag}>{tag}</Tag>
+        ))}
       </Label>
       <Label>
         <b>Quantity:</b>
@@ -40,13 +43,17 @@ const Details = () => {
       <ButtonAdd>add to cart</ButtonAdd>
       <Label>
         <b>Description:</b>
-        <Text>some large text that describes the product</Text>
+        <Text>{product.data.description[0].text}</Text>
       </Label>
       <Label>
         <b>Specs:</b>
-        <Text>a list of specs</Text>
-        <Text>for the product </Text>
-        <Text>To display on scren</Text>
+        <ul>
+          {product.data.specs.map((spec) => (
+            <li key={spec.spec_name}>
+              <b>{spec.spec_name}</b> : {spec.spec_value}
+            </li>
+          ))}
+        </ul>
       </Label>
     </div>
   );

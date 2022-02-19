@@ -7,11 +7,11 @@ import 'swiper/css/grid';
 import 'swiper/css/pagination';
 import { Pagination, Navigation } from 'swiper';
 import { useProducts } from '../../provider/Provider';
-import { useLatestAPI } from '../../utils/hooks/useLatestAPI';
 
 const CategorySlider = () => {
-  const { fetchCategories, categories, updatePage } = useProducts();
-  const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
+  const { fetchCategories, categories, updatePage, apiMetadata } =
+    useProducts();
+  const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
   const navigate = useNavigate();
 
   useEffect(() => {

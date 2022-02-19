@@ -74,6 +74,7 @@ export const InputWrapper = styled.div`
   position: relative;
   color: black;
   margin: 10px;
+  display: flex;
   @media (max-width: 767.98px) {
     margin: 6px;
   }
@@ -81,8 +82,30 @@ export const InputWrapper = styled.div`
 
 export const Icon = styled(MdSearch)`
   position: absolute;
-  font-size: 1.5rem;
-  heigth: 100%;
-  left: 12px;
-  top: 4px;
+  top: 50%;
+  left: 20px;
+  height: 50%;
+  transform: translate(-50%, -50%);
+  width: 1em;
+  height: 1empx;
+  display: block;
+`;
+
+export const Button = styled.button`
+  background-color: #222;
+  margin-left: 10px;
+  width: auto;
+  border-radius: 4px;
+  border-style: none;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  line-height: 2.5em;
+  &:hover,
+  &:focus {
+    opacity: 0.75;
+  }
 `;

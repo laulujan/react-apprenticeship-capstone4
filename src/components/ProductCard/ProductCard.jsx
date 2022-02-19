@@ -9,11 +9,19 @@ import {
   Button,
   Box,
 } from './ProductCard.styled';
+import { useProducts } from '../../provider/Provider';
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
+  const { fetchProductById, apiMetadata } = useProducts();
+  const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
 
   const handleClic = (id) => {
+    if (!apiRef || isApiMetadataLoading) {
+      return () => {};
+    }
+    fetchProductById(apiRef, id);
+    console.log(id);
     navigate({
       pathname: `/product/${id}`,
     });

@@ -19,11 +19,13 @@ export const LeftSide = styled.div`
 `;
 
 export const RightSide = styled.div`
+  margin-top: 10%;
   width: 40%;
   @media (max-width: 920px) {
     width: 50%;
   }
   @media (max-width: 820px) {
     width: 100%;
+    margin-top: 0;
   }
 `;

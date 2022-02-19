@@ -6,9 +6,11 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs, Pagination } from 'swiper';
+import { useProducts } from '../../provider/Provider';
 
 const Gallery = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const { product } = useProducts();
 
   return (
     <>
@@ -29,18 +31,11 @@ const Gallery = () => {
           spaceBetween={10}
           thumbs={{ swiper: thumbsSwiper }}
         >
-          <SwiperSlide>
-            <Img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
+          {product.data.images.map((img) => (
+            <SwiperSlide key={img.image.url}>
+              <Img src={img.image.url} />
+            </SwiperSlide>
+          ))}
         </Swiper>
         <Swiper
           onSwiper={setThumbsSwiper}
@@ -58,21 +53,11 @@ const Gallery = () => {
             maxWidth: '600px',
           }}
         >
-          <SwiperSlide>
-            <ImgSmall src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ImgSmall src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ImgSmall src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ImgSmall src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ImgSmall src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SwiperSlide>
+          {product.data.images.map((img) => (
+            <SwiperSlide key={img.image.url}>
+              <ImgSmall src={img.image.url} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </>
