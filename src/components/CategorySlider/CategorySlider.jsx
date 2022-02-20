@@ -9,7 +9,7 @@ import { Pagination, Navigation } from 'swiper';
 import { useProducts } from '../../provider/Provider';
 
 const CategorySlider = () => {
-  const { fetchCategories, categories, updatePage, apiMetadata } =
+  const { fetchCategories, categories, updatePage, apiMetadata, setFilters } =
     useProducts();
   const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const CategorySlider = () => {
 
   const handleClick = (id, categorySlug) => {
     updatePage(1);
+    setFilters(categorySlug);
     navigate({
       pathname: '/products',
       search: `?category=${categorySlug}`,

@@ -12,6 +12,7 @@ export const initialState = {
   product: {},
   apiMetadata: { ref: null, isLoading: true },
   results: [],
+  term: '',
 };
 
 export function productsReducer(state, action) {
@@ -119,6 +120,7 @@ export function productsReducer(state, action) {
         ...state,
         loading: false,
         results: payload.results,
+        totalPages: payload.totalPages,
       };
     case ACTIONS.SEARCH_PRODUCTS_ERROR:
       return {
@@ -130,6 +132,12 @@ export function productsReducer(state, action) {
       return {
         ...state,
         filters: payload.filters,
+        currentPage: payload.currentPage,
+      };
+    case ACTIONS.SET_TERM:
+      return {
+        ...state,
+        term: payload.term,
         currentPage: payload.currentPage,
       };
     case ACTIONS.UPDATE_PAGE:

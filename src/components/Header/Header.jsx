@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import {
@@ -13,21 +13,16 @@ import {
 import { useProducts } from '../../provider/Provider';
 
 const Header = () => {
-  const { searchProducts, apiMetadata } = useProducts();
-  const [term, setTerm] = useState('');
-  const { ref: apiRef } = apiMetadata;
+  const { setTerm, term } = useProducts();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log(term);
-    searchProducts(apiRef, term);
+    setTerm(document.getElementById('search').value);
     navigate({
       pathname: '/search',
       search: `?=${term}`,
     });
-  };
-  const handleChange = (e) => {
-    setTerm(e.target.value);
+    document.getElementById('search').value = '';
   };
 
   return (
@@ -40,7 +35,7 @@ const Header = () => {
         <InputWrapper>
           <label htmlFor="search-input">
             <Icon />
-            <Input type="text" placeholder="Search" onChange={handleChange} />
+            <Input type="text" placeholder="Search" id="search" />
           </label>
         </InputWrapper>
         <Button onClick={handleClick}>Search</Button>

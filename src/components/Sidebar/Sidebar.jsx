@@ -5,7 +5,7 @@ import { useProducts } from '../../provider/Provider';
 
 const Sidebar = ({ categories }) => {
   const navigate = useNavigate();
-  const { setFilters } = useProducts();
+  const { setFilters, filters } = useProducts();
 
   let selected = [];
   const onChange = () => {
@@ -20,7 +20,7 @@ const Sidebar = ({ categories }) => {
 
   return (
     <Container>
-      <Fieldset onChange={onChange}>
+      <Fieldset>
         <Legend>Categories</Legend>
         {categories &&
           categories.map((category) => (
@@ -30,6 +30,8 @@ const Sidebar = ({ categories }) => {
                 name={category.data.name}
                 id={category.data.name}
                 value={category.id}
+                checked={filters && filters.includes(category.data.name)}
+                onChange={onChange}
               />
               <label>{category.data.name}</label>
             </div>

@@ -21,6 +21,7 @@ const ACTIONS = {
   SEARCH_PRODUCTS: 'SEARCH_PRODUCTS',
   SEARCH_PRODUCTS_SUCCESS: 'SEARCH_PRODUCTS_SUCCESS',
   SEARCH_PRODUCTS_ERROR: 'SEARCH_PRODUCTS_ERROR',
+  SET_TERM: 'SET_TERM',
 };
 
 const getApiMetadata = (dispatch) => async () => {
@@ -56,10 +57,19 @@ const setFilters = (dispatch) => (filters) => {
     },
   });
 };
+const setTerm = (dispatch) => (term) => {
+  dispatch({
+    type: ACTIONS.SET_TERM,
+    payload: {
+      term: term,
+      currentPage: 1,
+    },
+  });
+};
 
 const updatePage = (dispatch) => (page) => {
   dispatch({
-    type: ACTIONS.SET_FILTERS,
+    type: ACTIONS.UPDATE_PAGE,
     payload: {
       currentPage: page,
     },
@@ -201,13 +211,13 @@ const fetchProductById = (dispatch) => async (apiRef, id) => {
   }
 };
 
-const searchProducts = (dispatch) => async (apiRef, term) => {
+const searchProducts = (dispatch) => async (apiRef, term, page) => {
   dispatch({ type: ACTIONS.SEARCH_PRODUCTS });
   try {
     const response = await fetch(
       `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
         `[[at(document.type, "product")][fulltext(document, "${term}")]]`
-      )}`
+      )}&lang=en-us&pageSize=12&page=${page}`
     );
     const products = await response.json();
 
@@ -216,6 +226,7 @@ const searchProducts = (dispatch) => async (apiRef, term) => {
       payload: {
         results: products.results,
         totalPages: products.total_pages,
+        currentPage: page,
       },
     });
     return products;
@@ -239,4 +250,5 @@ export {
   fetchProductById,
   getApiMetadata,
   searchProducts,
+  setTerm,
 };

@@ -40,7 +40,7 @@ const Details = () => {
         <Button>+</Button>
       </Box>
 
-      <ButtonAdd>add to cart</ButtonAdd>
+      <ButtonAdd>Add to cart</ButtonAdd>
       <Label>
         <b>Description:</b>
         <Text>{product.data.description[0].text}</Text>

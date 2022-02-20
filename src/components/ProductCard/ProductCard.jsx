@@ -21,7 +21,6 @@ const ProductCard = ({ product }) => {
       return () => {};
     }
     fetchProductById(apiRef, id);
-    console.log(id);
     navigate({
       pathname: `/product/${id}`,
     });
