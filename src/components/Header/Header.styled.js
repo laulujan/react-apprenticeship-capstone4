@@ -66,7 +66,7 @@ export const Input = styled.input`
     width: 200px;
   }
   @media (max-width: 767.98px) {
-    width: 150px;
+    width: 100px;
   }
 `;
 
@@ -107,5 +107,8 @@ export const Button = styled.button`
   &:hover,
   &:focus {
     opacity: 0.75;
+  }
+  @media (max-width: 767.98px) {
+    font-size: 0.8em;
   }
 `;
