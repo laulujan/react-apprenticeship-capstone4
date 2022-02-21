@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
   const { fetchProductById, apiMetadata } = useProducts();
   const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
 
-  const handleClic = (id) => {
+  const handleClick = (id) => {
     if (!apiRef || isApiMetadataLoading) {
       return () => {};
     }
@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
   };
   return (
     <>
-      <MyCard onClick={() => handleClic(product.id)}>
+      <MyCard onClick={() => handleClick(product.id)}>
         <CardImage src={product.data.mainimage.url} />
         <CardContent>
           <CardTitle>{product.data.name}</CardTitle>

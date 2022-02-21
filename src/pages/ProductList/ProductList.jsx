@@ -27,12 +27,12 @@ const ProductList = () => {
     if (!categoriesParams) {
       return '';
     }
-    //convert categories to array [name]
+    // Convert categories to array [name]
     let categoriesParamsArr = categoriesParams.split(',');
 
     let result = [];
 
-    //iterate categories array
+    // Iterate categories array
     categoriesParamsArr.map((categoryParam) => {
       // Find id from name in categories catalog
       categories.map((categorCatalog) => {
@@ -45,7 +45,7 @@ const ProductList = () => {
       });
     });
 
-    //Format result to string valid for use in prismic
+    // Format result to string valid for use in prismic
     return result.map((element) => `"${element}"`).join(',');
   };
   useEffect(() => {

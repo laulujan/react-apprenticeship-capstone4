@@ -12,13 +12,13 @@ const Pagination = ({ page }) => {
   const { totalPages, updatePage } = useProducts();
   const onIncrement = () => {
     if (page < totalPages) {
-      updatePage(++page);
+      updatePage((page += 1));
     }
   };
 
   const onDecrement = () => {
     if (page > 1) {
-      updatePage(--page);
+      updatePage((page -= 1));
     }
   };
   return (
