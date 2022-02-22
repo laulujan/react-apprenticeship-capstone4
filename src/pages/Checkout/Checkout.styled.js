@@ -48,6 +48,7 @@ export const Textarea = styled.textarea`
 
 export const Table = styled.table`
   border-collapse: collapse;
+  width: 100%;
   min-width: 500px;
   margin: auto;
   text-align: center;
