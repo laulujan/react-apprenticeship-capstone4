@@ -26,7 +26,7 @@ const Checkout = () => {
     cartItems.forEach((item) => {
       price += item.quantity * item.data.price;
     });
-    setTotal(price);
+    setTotal(price.toFixed(2));
   }, [cartItems, total, setTotal]);
 
   const handleClick = () => {
@@ -78,7 +78,7 @@ const Checkout = () => {
                   </TD>
                   <TD>${item.data.price}</TD>
                   <TD>{item.quantity}</TD>
-                  <TD> ${item.quantity * item.data.price}</TD>
+                  <TD> ${(item.quantity * item.data.price).toFixed(2)}</TD>
                 </tr>
               ))}
             </tbody>
