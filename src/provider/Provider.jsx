@@ -11,6 +11,9 @@ import {
   updatePage,
   getApiMetadata,
   searchProducts,
+  addToCart,
+  removeFromCart,
+  updateCart,
 } from './Actions';
 import { productsReducer, initialState } from './Reducer';
 
@@ -37,6 +40,7 @@ const ProductsProvider = ({ children }) => {
     apiMetadata: state.apiMetadata,
     results: state.results,
     term: state.term,
+    cartItems: state.cartItems,
     updatePage: updatePage(dispatch),
     setFilters: setFilters(dispatch),
     setTerm: setTerm(dispatch),
@@ -47,6 +51,9 @@ const ProductsProvider = ({ children }) => {
     fetchProductById: fetchProductById(dispatch),
     getApiMetadata: getApiMetadata(dispatch),
     searchProducts: searchProducts(dispatch),
+    addToCart: addToCart(dispatch),
+    removeFromCart: removeFromCart(dispatch),
+    updateCart: updateCart(dispatch),
   };
   return (
     <ProductsContext.Provider value={value}>
