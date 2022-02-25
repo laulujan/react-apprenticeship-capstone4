@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Title,
   Label,
@@ -11,8 +11,24 @@ import {
 import { useProducts } from '../../provider/Provider';
 
 const Details = () => {
-  const { product } = useProducts();
+  const { product, cartItems, addToCart } = useProducts();
+  const [count, setCount] = useState(1);
 
+  const increment = (product) => {
+    if (count < product.data.stock) {
+      setCount(count + 1);
+    }
+  };
+  const decrement = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+  useEffect(() => {}, [count]);
+
+  const addProduct = (product) => {
+    addToCart(product, cartItems, count);
+  };
   return (
     <div>
       <Title>{product.data.name}</Title>
@@ -35,12 +51,13 @@ const Details = () => {
         <b>Quantity:</b>
       </Label>
       <Box>
-        <Button>-</Button>
-        <Label> 1 </Label>
-        <Button>+</Button>
+        <Button onClick={decrement}>-</Button>
+        <Label> {count} </Label>
+        <Button onClick={() => increment(product)}>+</Button>
       </Box>
-
-      <ButtonAdd>Add to cart</ButtonAdd>
+      {product.data.stock > 0 && (
+        <ButtonAdd onClick={() => addProduct(product)}>Add to cart</ButtonAdd>
+      )}
       <Label>
         <b>Description:</b>
         <Text>{product.data.description[0].text}</Text>

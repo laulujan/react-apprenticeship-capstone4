@@ -13,6 +13,7 @@ export const initialState = {
   apiMetadata: { ref: null, isLoading: true },
   results: [],
   term: '',
+  cartItems: [],
 };
 
 export function productsReducer(state, action) {
@@ -144,6 +145,21 @@ export function productsReducer(state, action) {
       return {
         ...state,
         currentPage: payload.currentPage,
+      };
+    case ACTIONS.ADD_TO_CART:
+      return {
+        ...state,
+        cartItems: payload.cartItems,
+      };
+    case ACTIONS.REMOVE_FROM_CART:
+      return {
+        ...state,
+        cartItems: payload.cartItems,
+      };
+    case ACTIONS.UPDATE_CART:
+      return {
+        ...state,
+        cartItems: payload.cartItems,
       };
     default:
       throw new Error(`Invalid action "${type}"`);

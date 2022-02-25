@@ -13,7 +13,7 @@ import { useProducts } from '../../provider/Provider';
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-  const { fetchProductById, apiMetadata } = useProducts();
+  const { fetchProductById, apiMetadata, addToCart, cartItems } = useProducts();
   const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
 
   const handleClick = (id) => {
@@ -25,16 +25,29 @@ const ProductCard = ({ product }) => {
       pathname: `/product/${id}`,
     });
   };
+
+  const addProduct = (product) => {
+    addToCart(product, cartItems, 1);
+  };
+
   return (
     <>
-      <MyCard onClick={() => handleClick(product.id)}>
-        <CardImage src={product.data.mainimage.url} />
-        <CardContent>
-          <CardTitle>{product.data.name}</CardTitle>
-          <CardDescription>Price: ${product.data.price}</CardDescription>
-        </CardContent>
+      <MyCard>
+        <div onClick={() => handleClick(product.id)}>
+          <CardImage src={product.data.mainimage.url} />
+          <CardContent>
+            <CardTitle>{product.data.name}</CardTitle>
+            <CardDescription>Price: ${product.data.price}</CardDescription>
+          </CardContent>
+        </div>
         <Box>
-          <Button>Add to Cart</Button>
+          <Button
+            onClick={() => {
+              addProduct(product);
+            }}
+          >
+            Add to Cart
+          </Button>
         </Box>
       </MyCard>
     </>

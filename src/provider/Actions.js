@@ -22,6 +22,9 @@ const ACTIONS = {
   SEARCH_PRODUCTS_SUCCESS: 'SEARCH_PRODUCTS_SUCCESS',
   SEARCH_PRODUCTS_ERROR: 'SEARCH_PRODUCTS_ERROR',
   SET_TERM: 'SET_TERM',
+  ADD_TO_CART: 'ADD_TO_CART',
+  REMOVE_FROM_CART: 'REMOVE_FROM_CART',
+  UPDATE_CART: 'UPDATE_CART',
 };
 
 const getApiMetadata = (dispatch) => async () => {
@@ -239,6 +242,39 @@ const searchProducts = (dispatch) => async (apiRef, term, page) => {
   }
 };
 
+const addToCart = (dispatch) => (product, cartItems, qty) => {
+  const inCart =
+    cartItems &&
+    cartItems.find((item) => (item.id === product.id ? true : false));
+
+  cartItems = inCart
+    ? cartItems.map((item) =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + qty }
+          : item
+      )
+    : [...cartItems, { ...product, quantity: qty }];
+  dispatch({ type: ACTIONS.ADD_TO_CART, payload: { cartItems: cartItems } });
+};
+
+const removeFromCart = (dispatch) => (product, cartItems) => {
+  cartItems = cartItems.filter((item) => item.id !== product.id);
+  dispatch({
+    type: ACTIONS.REMOVE_FROM_CART,
+    payload: { cartItems: cartItems },
+  });
+};
+
+const updateCart = (dispatch) => (product, cartItems, qty) => {
+  cartItems = cartItems.map((item) =>
+    item.id === product.id ? { ...item, quantity: qty } : item
+  );
+  dispatch({
+    type: ACTIONS.UPDATE_CART,
+    payload: { cartItems: cartItems },
+  });
+};
+
 export {
   ACTIONS,
   fetchCategories,
@@ -251,4 +287,7 @@ export {
   getApiMetadata,
   searchProducts,
   setTerm,
+  addToCart,
+  removeFromCart,
+  updateCart,
 };
