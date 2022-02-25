@@ -5,11 +5,7 @@ module.exports = {
     jest: true,
     node: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -17,7 +13,6 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: ['react'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
