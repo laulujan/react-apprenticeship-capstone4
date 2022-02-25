@@ -36,6 +36,7 @@ export const CardTitle = styled.h4`
   padding: 0;
   word-wrap: break-word;
   font-size: 1.5rem;
+  white-space: nowrap;
 `;
 
 export const CardDescription = styled.p`

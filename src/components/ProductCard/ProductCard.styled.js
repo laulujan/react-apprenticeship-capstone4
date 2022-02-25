@@ -21,6 +21,10 @@ export const MyCard = styled.div`
 export const CardContent = styled.div`
   padding: 2px 16px;
   text-align: center;
+  min-height: 170px;
+  @media (max-width: 640px) {
+    min-height: 90px;
+  }
 `;
 
 export const CardImage = styled.img`
@@ -39,3 +43,24 @@ export const CardDescription = styled.p`
   word-wrap: break-word;
   font-size: 1rem;
 `;
+
+export const Button = styled.button`
+  background-color: #222;
+  border-radius: 4px;
+  border-style: none;
+  cursor: pointer;
+  display: inline-block;
+  min-height: 44px;
+  width: 100%;
+  text-align: center;
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  line-height: 2.5em;
+  &:hover,
+  &:focus {
+    opacity: 0.75;
+  }
+`;
+
+export const Box = styled.div``;
