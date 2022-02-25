@@ -1,24 +1,34 @@
-import React, { useState, useEffect } from 'react';
-// Import Swiper React components
+import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useNavigate } from 'react-router-dom';
 import CategoryCard from '../CategoryCard/CategoryCard';
-import { fetchdata } from '../../api/fetchData';
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
-
-// import required modules
 import { Pagination, Navigation } from 'swiper';
+import { useProducts } from '../../provider/Provider';
 
 const CategorySlider = () => {
-  const [categories, setCategories] = useState([]);
+  const { fetchCategories, categories, updatePage, apiMetadata, setFilters } =
+    useProducts();
+  const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchdata(
-      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/product-categories.json'
-    ).then((data) => setCategories(data.results));
-  }, []);
+    if (!apiRef || isApiMetadataLoading) {
+      return () => {};
+    }
+    fetchCategories(apiRef);
+  }, [isApiMetadataLoading]);
+
+  const handleClick = (id, categorySlug) => {
+    updatePage(1);
+    setFilters(categorySlug);
+    navigate({
+      pathname: '/products',
+      search: `?category=${categorySlug}`,
+    });
+  };
   return (
     <>
       <Swiper
@@ -53,7 +63,7 @@ const CategorySlider = () => {
         {categories &&
           categories.map((category) => (
             <SwiperSlide key={category.id}>
-              <CategoryCard category={category.data} />
+              <CategoryCard category={category} handleClick={handleClick} />
             </SwiperSlide>
           ))}
       </Swiper>

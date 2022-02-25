@@ -1,50 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import { fetchdata } from '../../api/fetchData';
+import React, { useEffect } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import CardContainer from '../../components/CardContainer/CardContainer';
 import { Container } from './ProductList.styled';
 import Pagination from '../../components/Pagination/Pagination';
 import Loader from '../../components/Loader/Loader';
+import { useProducts } from '../../provider/Provider';
+import { useSearchParams } from 'react-router-dom';
 
 const ProductList = () => {
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [activeFilters, setActiveFilters] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    fetchdata(
-      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/product-categories.json'
-    ).then((data) => setCategories(data.results));
-  }, []);
-  useEffect(() => {
-    fetchdata(
-      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/products.json'
-    ).then((data) => setProducts(data.results));
-  }, []);
+  const {
+    fetchProducts,
+    products,
+    categories,
+    loading,
+    fetchCategories,
+    fetchProductsByCategory,
+    filters,
+    currentPage,
+    apiMetadata,
+  } = useProducts();
+  const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
 
-  const filter = () => {
-    const activeFiltersSet = new Set(activeFilters);
+  const formatCategories = (categoriesParams) => {
+    if (!categoriesParams) {
+      return '';
+    }
+    // Convert categories to array [name]
+    let categoriesParamsArr = categoriesParams.split(',');
 
-    const result = products.filter((o) => {
-      return activeFiltersSet.has(o.data.category.id);
+    let result = [];
+
+    // Iterate categories array
+    categoriesParamsArr.map((categoryParam) => {
+      // Find id from name in categories catalog
+      categories.map((categorCatalog) => {
+        if (
+          categoryParam === categorCatalog.data.name ||
+          categorCatalog.data.name.includes(categoryParam)
+        ) {
+          result.push(categorCatalog.id);
+        }
+      });
     });
 
-    return result;
+    // Format result to string valid for use in prismic
+    return result.map((element) => `"${element}"`).join(',');
   };
   useEffect(() => {
-    const result = filter();
-    setFilteredProducts(result);
-  }, [activeFilters]);
+    if (!apiRef || isApiMetadataLoading) {
+      return () => {};
+    }
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
-  }, [loading]);
+    if (categories.length < 1) {
+      fetchCategories(apiRef);
+    }
+
+    let categoriesParams = searchParams.get('category');
+
+    if (categoriesParams) {
+      fetchProductsByCategory(
+        apiRef,
+        formatCategories(categoriesParams),
+        currentPage
+      );
+    } else {
+      fetchProducts(apiRef, currentPage);
+    }
+  }, [isApiMetadataLoading, currentPage, filters]);
 
   return (
     <Container>
-      <Sidebar categories={categories} setActiveFilters={setActiveFilters} />
+      <Sidebar categories={categories} />
 
       <div>
         {loading ? (
@@ -52,13 +80,8 @@ const ProductList = () => {
         ) : (
           <>
             <h2>Product List</h2>
-            <CardContainer
-              products={
-                filteredProducts.length < 1 ? products : filteredProducts
-              }
-              activeFilters={activeFilters}
-            />
-            <Pagination />
+            <CardContainer products={products} />
+            <Pagination page={currentPage} />
           </>
         )}
       </div>

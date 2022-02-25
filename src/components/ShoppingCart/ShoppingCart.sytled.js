@@ -33,3 +33,25 @@ export const CartIcon = styled(MdOutlineShoppingCart)`
   height: 1empx;
   display: block;
 `;
+
+export const Badge = styled.span`
+  position: absolute;
+  left: 22px;
+  bottom: 30px;
+  display: block;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  font-weight: light;
+  font-family: 'Trebuchet MS', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.4em;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  background: #39bda9;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(#fff, 0.3);
+  z-index: 50;
+`;

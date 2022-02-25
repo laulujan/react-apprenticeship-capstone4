@@ -1,26 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slider from '../../components/Slider/Slider';
 import CategorySlider from '../../components/CategorySlider/CategorySlider';
 import CardContainer from '../../components/CardContainer/CardContainer';
 import { Container, Title, Button } from './Home.styled';
-import { fetchdata } from '../../api/fetchData';
+import { useProducts } from '../../provider/Provider';
 
-const Home = ({ onClick }) => {
-  const [products, setProducts] = useState([]);
+const Home = () => {
+  const {
+    fetchFeaturedProducts,
+    featuredProducts,
+    setFilters,
+    apiMetadata,
+    getApiMetadata,
+  } = useProducts();
+  const { ref: apiRef, isLoading: isApiMetadataLoading } = apiMetadata;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchdata(
-      'https://raw.githubusercontent.com/wizelineacademy/react-apprenticeship-capstone4/main/mocks/en-us/featured-products.json'
-    ).then((data) => setProducts(data.results));
-  }, []);
+    getApiMetadata();
+    if (!apiRef || isApiMetadataLoading) {
+      return () => {};
+    }
+
+    fetchFeaturedProducts(apiRef);
+  }, [isApiMetadataLoading]);
+
+  const handleClick = () => {
+    setFilters('');
+    navigate({
+      pathname: '/products',
+    });
+  };
   return (
     <Container>
       <Slider />
       <Title>Categories</Title>
       <CategorySlider />
       <Title>Featured Products</Title>
-      <CardContainer products={products} />
-      <Button onClick={onClick}>View all products</Button>
+      <CardContainer products={featuredProducts} />
+      <Button onClick={handleClick}>View all products</Button>
     </Container>
   );
 };
